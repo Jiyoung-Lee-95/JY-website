@@ -9,21 +9,142 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 50px;
-            background-color: #f0f8ff;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef, #fecfef);
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
         }
+        
         h1 {
             color: #ff6b6b;
             font-size: 3em;
             margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
+        
         p {
             color: #333;
             font-size: 1.2em;
+            margin-bottom: 30px;
+        }
+        
+        .love-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.3em;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+        
+        .love-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        .secret-message {
+            display: none;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 20px auto;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 하트 떨어지는 애니메이션 */
+        .heart {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 20px;
+            animation: fall linear infinite;
+            opacity: 0.8;
+        }
+        
+        @keyframes fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(calc(100vh + 100px)) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
-    <h1>Hello, 다연! 💖</h1>
-    <p>이것은 당신을 위해 만든 첫 번째 웹페이지입니다.</p>
+    <div class="container">
+        <h1>Hello, 다연! 💖</h1>
+        <p>이것은 당신을 위해 만든 특별한 첫 웹페이지입니다.</p>
+        
+        <button class="love-button" onclick="showMessage1()">💕 클릭해봐요!</button>
+        <button class="love-button" onclick="showMessage2()">✨ 여기도!</button>
+        
+        <div id="message1" class="secret-message">
+            <h3>💝 첫 번째 메시지</h3>
+            <p>당신과 함께하는 모든 순간이 소중해요! 400일을 축하합니다</p>
+        </div>
+        
+        <div id="message2" class="secret-message">
+            <h3>🌟 두 번째 메시지</h3>
+            <p>이 웹페이지처럼 우리의 사랑도 계속 발전해나가요! 🚀</p>
+        </div>
+    </div>
+
+    <script>
+        function showMessage1() {
+            const message = document.getElementById('message1');
+            message.style.display = message.style.display === 'none' || message.style.display === '' ? 'block' : 'none';
+        }
+        
+        function showMessage2() {
+            const message = document.getElementById('message2');
+            message.style.display = message.style.display === 'none' || message.style.display === '' ? 'block' : 'none';
+        }
+        
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            
+            document.body.appendChild(heart);
+            
+            // 애니메이션이 끝나면 하트 제거
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+        
+        // 페이지 로드 시 하트가 계속 떨어지게 하기
+        window.onload = function() {
+            // 첫 번째 하트들
+            for (let i = 0; i < 8; i++) {
+                setTimeout(createHeart, i * 500);
+            }
+            
+            // 3초마다 새로운 하트 생성
+            setInterval(createHeart, 3000);
+        }
+    </script>
 </body>
 </html>
